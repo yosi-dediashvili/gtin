@@ -14,7 +14,7 @@ Although this gem currently supports a small subset of the GTIN standard (let al
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'gtin'
+gem 'gtin', git: 'https://github.com/jreut/gtin.git'
 ```
 
 And then execute:
