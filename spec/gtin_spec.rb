@@ -2,7 +2,16 @@ require 'spec_helper'
 
 describe Gtin do
   before(:all) do
-    @valid_gtin = '603675101876'
+    @valid_gtin = %w(
+      603675101876
+      376104250021234569
+      877565007023
+    )
+    @valid_upc_e = {
+      '00123457' => '001234000057',
+      '08787337' => '087800000737'
+    }
+    @invalid_upc_e = %w( 123456 )
   end
 
   it 'has a version number' do
@@ -15,21 +24,29 @@ describe Gtin do
 
   context 'module' do
     it 'can calculate a checksum' do
-      expect(Gtin.checksum @valid_gtin[0..-2]).to eq @valid_gtin[-1]
+      @valid_gtin.each do |g|
+        expect(Gtin.checksum g[0..-2]).to eq g[-1]
+      end
     end
 
     it 'can create a GTIN from a UPC-E' do
-      expect(Gtin.from_upc_e '00123457').to eq '001234000057'
+      @valid_upc_e.each do |k, v|
+        expect(Gtin.from_upc_e k).to eq v
+      end
     end
   end
 
   context 'instance' do
     it 'validates a proper GTIN' do
-      expect(@valid_gtin.gtin?).to be true
+      @valid_gtin.each do |g|
+        expect(g.gtin?).to be true
+      end
     end
 
     it 'knows its checksum' do
-      expect(@valid_gtin.checksum).to eq @valid_gtin[-1]
+      @valid_gtin.each do |g|
+        expect(g.checksum).to eq g[-1]
+      end
     end
 
     it 'rejects improper strings' do
@@ -40,6 +57,10 @@ describe Gtin do
 
     it 'converts between representations' do
       expect('001234000057'.to_upc_e).to eq '00123457'
+    end
+
+    it "doesn't make erroneous UPC-E symbols" do
+      expect('')
     end
   end
 end
