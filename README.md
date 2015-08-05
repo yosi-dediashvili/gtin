@@ -1,10 +1,13 @@
+# caveat emptor!
+**This gem is not currently on [RubyGems](https://rubygems.org/). I have contacted the developers of the original, unmaintained [`gtin` gem](https://rubygems.org/gems/gtin), requesting to be added as an owner**
+
 # Gtin
 
-![Travis CI build status](https://travis-ci.org/jreut/gs1.svg)
+![Travis CI build status](https://travis-ci.org/jreut/gtin.svg)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gtin`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a Ruby implementation of the Global Trade Identifier Number. This [global standard](http://www.gs1.org/gtin) is the umbrella covering the more familiar concepts of UPC, EAN, etc.
 
-TODO: Delete this and the text above, and describe your gem
+Although this gem currently supports a small subset of the GTIN standard (let alone the entire GS1 specification), it is still useful, especially in the conversion of UPC-E symbols into their GTIN.
 
 ## Installation
 
@@ -24,7 +27,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Start by requiring the gem:
+
+```ruby
+require 'gtin'
+```
+
+### Constructing a GTIN
+
+GTINs are just plain old `String`s. You can check if a string is a valid GTIN like this:
+
+```ruby
+'603675101876'.gtin?          # true
+```
+
+You can also construct a GTIN from a raw UPC-E string.
+
+```ruby
+Gtin.from_upc_e '08787337'    # '087800000737'
+```
 
 ## Development
 
@@ -34,7 +55,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/jreut/gs1. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jreut/gtin. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
