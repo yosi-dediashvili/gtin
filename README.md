@@ -45,6 +45,8 @@ You can also construct a GTIN from a raw UPC-E string.
 
 ```ruby
 Gtin.from_upc_e '08787337'    # '087800000737'
+# You can also omit the check digit and/or the implicit leading zero:
+Gtin.from_upc_e '878733'    # '087800000737'
 ```
 
 ## Development

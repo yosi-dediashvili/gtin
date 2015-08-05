@@ -14,17 +14,17 @@ module Gtin
     str.match(/^0?(\d{6})(\d?)$/) do |m|
       return nil if m.nil?
       s, c = m[1..2]
-      expanded =  case s[5]
-                  when '0'..'2'
-                    s[0..1] << s[5] << '0' * 4 << s[2..4]
-                  when '3'
-                    s[0..2] << '0' * 5 << s[3..4]
-                  when '4'
-                    s[0..3] << '0' * 5 << s[4]
-                  when '5'..'9'
-                    s[0..4] << '0' * 4 << s[5]
-                  end
-      return '0' << expanded << c || Gtin.checksum(expanded)
+      e = case s[5]
+          when '0'..'2'
+            s[0..1] << s[5] << '0' * 4 << s[2..4]
+          when '3'
+            s[0..2] << '0' * 5 << s[3..4]
+          when '4'
+            s[0..3] << '0' * 5 << s[4]
+          when '5'..'9'
+            s[0..4] << '0' * 4 << s[5]
+          end
+      return '0' << e << (c.empty? ? Gtin.checksum(e) : c)
     end
   end
 
