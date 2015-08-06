@@ -4,22 +4,21 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'gtin/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "gtin"
+  spec.name          = 'gtin'
   spec.version       = Gtin::VERSION
-  spec.authors       = ["Jordan Ryan Reuter"]
-  spec.email         = ["me@jreut.com"]
+  spec.authors       = ['Jordan Ryan Reuter']
+  spec.email         = ['me@jreut.com']
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "https://github.com/jreut/gs1"
-  spec.license       = "MIT"
+  spec.summary       = %q{Implementation of the Global Trade Identification Number}
+  spec.homepage      = 'https://github.com/jreut/gs1'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
+  spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency 'bundler', '~> 1.10'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.3'
 end
