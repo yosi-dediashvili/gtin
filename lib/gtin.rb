@@ -25,12 +25,14 @@ module Gtin
             s[0..4] << '0' * 4 << s[5]
           end
       gtin = '0' << e << (c.empty? ? Gtin.checksum(e) : c)
-      Gtin.valid_upc_e?(s) && gtin.gtin? || fail(ArgumentError, 'invalid UPC-E')
+      if !(Gtin.valid_upc_e_format?(s) && gtin.gtin?)
+        fail(ArgumentError, 'invalid UPC-E')
+      end
       gtin
     end
   end
 
-  def self.valid_upc_e?(str)
+  def self.valid_upc_e_format?(str)
     # from GS1 General Specification
     # Fig. 7.10-1
     #
@@ -48,6 +50,12 @@ module Gtin
     else
       false
     end
+  end
+
+  def self.valid_upc_e?(str)
+    Gtin.valid_upc_e_format?(str) && Gtin.from_upc_e(str)
+  rescue ArgumentError
+    false
   end
 
   def check_digit

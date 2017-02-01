@@ -36,6 +36,26 @@ describe Gtin do
     end
 
     context 'when given a UPC-E string' do
+      it 'validates a proper UPC-E' do
+        @valid_upc_e.each do |k, v|
+          expect(Gtin.valid_upc_e? k).to be_truthy
+        end
+      end
+
+      it 'validates a proper UPC-E format' do
+        @valid_upc_e.each do |k, v|
+          expect(Gtin.valid_upc_e_format? k).to be_truthy
+        end
+      end
+
+      it 'validates a proper UPC-E format with invalid check-digit' do
+        expect(Gtin.valid_upc_e_format? "2012345").to be_truthy
+      end
+
+      it 'rejects a proper UPC-E format with invalid check digit' do
+        expect(Gtin.valid_upc_e? "2012345").to be_falsy
+      end
+
       it 'can create a GTIN' do
         @valid_upc_e.each do |k, v|
           expect(Gtin.from_upc_e k).to eq v
@@ -43,8 +63,8 @@ describe Gtin do
       end
 
       it 'rejects invalid UPC-E strings' do
-        %w( 000004 ).each do
-          expect { Gtin.from_upc_e }.to raise_error(ArgumentError)
+        %w( 000004 ).each do |v|
+          expect { Gtin.from_upc_e v}.to raise_error(ArgumentError)
         end
       end
     end
